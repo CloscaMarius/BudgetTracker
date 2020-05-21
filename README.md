@@ -1,4 +1,4 @@
-## Wantsome - Project X
+## Wantsome - Budget Tracker
 
  - This is a __template__ for the final project at the end of Java course.
    It's just a basic working gradle project, with common libraries included.
