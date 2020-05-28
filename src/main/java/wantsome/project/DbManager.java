@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbManager {
-    private static String dbFile = "C:\\Users\\Marius\\Desktop\\teme_marius_closca\\src\\main\\resources\\proiect\\budget_tracker.db";
+    private static String dbFile = "src/main/resources/public/budget_tracker.db";
 
 
     public static void setDbFile(String newDbFile) {

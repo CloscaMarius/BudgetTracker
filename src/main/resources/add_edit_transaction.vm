@@ -1,0 +1,72 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/common.css">
+    <link rel="stylesheet" type="text/css" href="/add.css">
+</head>
+
+
+<body>
+
+    <img src="/budget_tracker_logo.png" width=200>
+    <br>
+
+    <h3 class='title'>
+        #if($isUpdate)
+            Update transaction
+        #else
+            Add new transaction
+        #end
+    </h3>
+
+
+    <!-- To display error/validation messages (if any was set from Java code)-->
+    <h4 class='error'> $errorMsg </h4>
+
+
+    <form method='post'>
+        <table>
+
+            <!-- row with Id is optional, show only for Update case (not Add, when it's not set anyway) -->
+            #if($isUpdate)
+            <tr>
+                <td> Id: </td>
+                <td> <input type='text' name='id' value='$!prevId' readonly> </td>
+            </tr>
+            #end
+
+            <tr>
+                <td> Category: </td>
+                <td>
+                    <select name='categoryId'>
+                        #foreach ($cat in $categories)
+                            <option value='$cat.id'  #if($prevCategoryId==$cat.id) selected #end > $cat.description </option>
+                        #end
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td> Date : </td>
+                <td> <input type='date' name='date' value='$prevDate' required> </td>
+            </tr>
+
+            <tr>
+                <td> Details (optional): </td>
+                <td> <input type='text' name='details' value='$prevDetails' > </td>
+            </tr>
+
+            <tr>
+                <td> Amount: </td>
+                <td> <input type='number' step='0.01' name='amount' value='$prevAmount' required> </td>
+            </tr>
+
+            <tr>
+                <td> <button onclick="location.href='/main'" type="button"> Cancel </button> </td>
+                <td> <input type='submit' value='#if($isUpdate) Update #{else} Add #end'> </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>

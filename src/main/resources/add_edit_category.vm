@@ -1,0 +1,56 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/common.css">
+    <link rel="stylesheet" type="text/css" href="/add.css">
+</head>
+
+
+<body>
+
+    <img src="/budget_tracker_logo.png" width=200>
+    <br>
+
+    <h3 class='title'>
+        #if($isUpdate)
+            Update category
+        #else
+            Add new category
+        #end
+    </h3>
+
+    <h4 class='error'> $errorMsg </h4>
+
+    <form method='post'>
+        <table>
+
+            #if($isUpdate)
+            <tr>
+                <td> Id: </td>
+                <td> <input type='text' name='id' value='$!prevId' readonly> </td>
+            </tr>
+            #end
+
+            <tr>
+                <td> Description: </td>
+                <td> <input type='text' name='description' value='$prevDescription' required> </td>
+            </tr>
+
+            <tr>
+                <td> Type: </td>
+                <td>
+                    <select name='type'>
+                        <option value="EXPENSE" #if($prevType=='EXPENSE') selected #end > Expense </option>
+                        <option value="INCOME" #if($prevType=='INCOME') selected #end > Income </option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td> <button onclick="location.href='/categories'" type="button"> Cancel </button> </td>
+                <td> <input type='submit' value='#if($isUpdate) Update #{else} Add #end'> </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>

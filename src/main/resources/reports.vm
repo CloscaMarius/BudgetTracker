@@ -1,0 +1,157 @@
+<html>
+<head>
+    <!-- include some css files (taken from /public/.. folder) -->
+    <link rel="stylesheet" type="text/css" href="/common.css">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+
+<!-- for chart part, using lib: https://developers.google.com/chart -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            // Create the data table for the chart
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Status');
+            data.addColumn('number', 'Count');
+            data.addRows([
+                ['Expense', $expense],
+                ['Income', $income]
+            ]);
+
+            // Set chart options
+            var options = {
+                title:'Income/Expense Report',
+                colors: ['#fc671c','green' ],
+                backgroundColor: {
+                    fill: 'white',
+                    fillOpacity: 0.5
+                },
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
+</head>
+
+
+<body>
+
+    <!-- include logo (generated online at: https://cooltext.com) -->
+    <img src="/budget_tracker_logo.png" width=200>
+    <br><br>
+
+    <!-- first row above table, with some labels and links -->
+
+    Balance: <b> $balance </b> &emsp;
+
+    All Income: <b> $income </b> &emsp;
+
+    All Expenses: <b> $expense </b> &emsp;
+
+<br><br>
+
+    Sorted by:
+
+    <select onChange="window.location.href=this.value" >
+        <option value='/reports'> - </option>
+        <option value='/reports?sortBy=DATE_DESC'  > Date desc </option>
+        <option value='/reports?sortBy=DATE_ASC'  > Date asc </option>
+        <option value='/reports?sortBy=AMOUNT_DESC'  > Amount desc </option>
+        <option value='/reports?sortBy=AMOUNT_ASC'  > Amount asc </option>
+    </select> &emsp;
+
+
+    Filter:
+
+        <select  name='category_type' onChange="window.location.href=this.value" >
+            <option value='/reports'> - </option>
+            <option value='/reports?category_type=ALL'  > All </option>
+            <option value='/reports?category_type=EXPENSE'  > Expense </option>
+            <option value='/reports?category_type=INCOME'  > Income </option>
+        </select>
+
+<br><br>
+    Search by Date:
+
+    <form action='/reports'>
+      <input type='date' name='date1' >
+      -
+      <input type='date' name='date2' >
+
+      <input type='submit'>
+    </form>
+
+    <br>
+
+    <button onclick="location.href='/reports?date1=&date2=&category_type=ALL'" type="button"> Refresh </button>
+
+    <br>
+
+
+
+    <!-- table of transactions -->
+
+
+    <br>
+
+    <table>
+
+        <!-- header row first -->
+        <tr>
+            <th> Id </th>
+            <th> Category </th>
+            <th> Date </th>
+            <th> Type </th>
+            <th> Amount </th>
+            <th> Details </th>
+        </tr>
+
+        <!-- then for each note from model generate one regular table -->
+        #foreach($transaction in $transactions)
+            <tr>
+                <td width=5% align=center>
+                        $transaction.id
+                    </a>
+                </td>
+
+                <td width=10% align=center>
+                    $transaction.category_description
+                </td>
+
+                <td width=40%>
+                    $transaction.date
+                </td>
+
+                <td width=15% align=center>
+                    $transaction.category_type
+                </td>
+
+                <td width=10% align=center>
+                    $transaction.amount
+                </td>
+
+                <td width=10% align=center>
+                    $!transaction.details
+                </td>
+
+            </tr>
+        #end
+
+    </table>
+
+    <br><br>
+<button onclick="location.href='/main'" type="button"> Back to main page </button>
+    <br><br><br>
+
+        <!--Div that will hold the pie chart-->
+        <div id="chart_div" style="width: 500px; height: 300px;"></div>
+
+</body>
+</html>

@@ -2,21 +2,18 @@ package wantsome.project.db.dto;
 
 import java.util.Objects;
 
-public class CategoriesDto {
+public class CategoryDto {
 
     private long id;
     private String description;
     private Type type;
 
-    public CategoriesDto() {
-    }
 
-
-    public CategoriesDto(String description, Type type) {
+    public CategoryDto(String description, Type type) {
         this(-1, description, type);
     }
 
-    public CategoriesDto(long id, String description, Type type) {
+    public CategoryDto(long id, String description, Type type) {
         this.id = id;
         this.description = description;
         this.type = type;
@@ -50,7 +47,7 @@ public class CategoriesDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CategoriesDto that = (CategoriesDto) o;
+        CategoryDto that = (CategoryDto) o;
         return id == that.id &&
                 Objects.equals(description, that.description) &&
                 type == that.type;

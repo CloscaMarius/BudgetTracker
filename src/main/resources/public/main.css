@@ -1,7 +1,16 @@
-body {
-    background-color: #aaffaa
+table, th, td {
+    border: 1px solid black;
 }
 
-h1 {
-    color: #007700
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    color: #3333cc;
+}
+
+td {
+    padding: 5px;
 }

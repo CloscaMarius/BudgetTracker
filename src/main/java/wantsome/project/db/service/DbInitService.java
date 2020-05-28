@@ -35,8 +35,8 @@ public class DbInitService {
     public static void deleteAllTables() {
         try (Connection conn = DbManager.getConnection();
              Statement st = conn.createStatement()) {
-            st.execute("drop table if exists categories");
             st.execute("drop table if exists transactions");
+            st.execute("drop table if exists categories");
         } catch (SQLException e) {
             System.err.println("Error deleting tables: " + e.getMessage());
         }

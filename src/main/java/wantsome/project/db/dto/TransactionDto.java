@@ -3,30 +3,22 @@ package wantsome.project.db.dto;
 import java.sql.Date;
 import java.util.Objects;
 
-public class TransactionsDto {
+public class TransactionDto {
     private long id;
     private long category_id;
     private Date date;
     private String details;
     private double amount;
 
-
-    //Date utilDate = new SimpleDateFormat("yyyy-MM-dd");
-    // because PreparedStatement#setDate(..) expects a java.sql.Date argument
-    //java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
-    public TransactionsDto() {
-    }
-
-    public TransactionsDto(long category_id, String date, String details, double amount) {
+    public TransactionDto(long category_id, Date date, String details, double amount) {
         this(-1, category_id, date, details, amount);
     }
 
-    public TransactionsDto(long id, long category_id, String date, String details, double amount) {
+    public TransactionDto(long id, long category_id, Date date, String details, double amount) {
 
         this.id = id;
         this.category_id = category_id;
-        this.date = Date.valueOf(date);
+        this.date = date;
         this.details = details;
         this.amount = amount;
     }
@@ -75,7 +67,7 @@ public class TransactionsDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TransactionsDto that = (TransactionsDto) o;
+        TransactionDto that = (TransactionDto) o;
         return id == that.id &&
                 category_id == that.category_id &&
                 Double.compare(that.amount, amount) == 0 &&
