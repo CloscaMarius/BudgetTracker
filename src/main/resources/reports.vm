@@ -27,8 +27,9 @@
                 colors: ['#fc671c','green' ],
                 backgroundColor: {
                     fill: 'white',
-                    fillOpacity: 0.5
+                    fillOpacity: 0.01
                 },
+
             };
 
             // Instantiate and draw the chart
@@ -44,8 +45,8 @@
 <body>
 
     <!-- include logo (generated online at: https://cooltext.com) -->
-    <img src="/budget_tracker_logo.png" width=200>
-    <br><br>
+    <img src="/budget_tracker_logo2.png" width=175>
+    <br>
 
     <!-- first row above table, with some labels and links -->
 
@@ -78,7 +79,7 @@
         </select>
 
 <br><br>
-    Search by Date:
+    Filter by Date:
 
     <form action='/reports'>
       <input type='date' name='date1' >
@@ -109,7 +110,7 @@
             <th> Category </th>
             <th> Date </th>
             <th> Type </th>
-            <th> Amount </th>
+            <th> Amount($) </th>
             <th> Details </th>
         </tr>
 
@@ -125,7 +126,7 @@
                     $transaction.category_description
                 </td>
 
-                <td width=40%>
+                <td width=20% align=center>
                     $transaction.date
                 </td>
 
@@ -151,7 +152,7 @@
     <br><br><br>
 
         <!--Div that will hold the pie chart-->
-        <div id="chart_div" style="width: 500px; height: 300px;"></div>
+        <div id="chart_div" style="width: 500px; height: 300px; position: absolute; top: 0px; right: 0px;"></div>
 
 </body>
 </html>

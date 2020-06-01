@@ -1,4 +1,4 @@
-package wantsome.project.web;
+package wantsome.project.ui.web;
 
 import spark.Request;
 import spark.Response;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-import static wantsome.project.web.SparkUtil.render;
+import static wantsome.project.ui.web.SparkUtil.render;
 
 public class TransactionsPageController {
 

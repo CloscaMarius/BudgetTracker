@@ -1,4 +1,4 @@
-package wantsome.project.web;
+package wantsome.project.ui.web;
 
 import wantsome.project.db.service.TransactionDao;
 

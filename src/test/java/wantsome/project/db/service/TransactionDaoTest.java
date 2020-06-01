@@ -6,7 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import wantsome.project.DbManager;
 import wantsome.project.db.dto.TransactionDto;
-import wantsome.project.web.TransactionStats;
+import wantsome.project.ui.web.TransactionStats;
 
 import java.sql.Date;
 import java.util.Arrays;

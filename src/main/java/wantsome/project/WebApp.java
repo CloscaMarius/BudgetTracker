@@ -2,7 +2,7 @@ package wantsome.project;
 
 import spark.Spark;
 import wantsome.project.db.service.DbInitService;
-import wantsome.project.web.*;
+import wantsome.project.ui.web.*;
 
 import static spark.Spark.*;
 

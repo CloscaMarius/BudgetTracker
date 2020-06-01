@@ -1,4 +1,4 @@
-package wantsome.project.web;
+package wantsome.project.ui.web;
 
 import spark.Request;
 import spark.Response;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static wantsome.project.web.SparkUtil.render;
+import static wantsome.project.ui.web.SparkUtil.render;
 
 /**
  * Handles the user interaction for adding or updating a transaction.
