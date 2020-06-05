@@ -38,6 +38,41 @@
         }
     </script>
 
+ <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            // Create the data table for the chart
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Status');
+            data.addColumn('number', 'Count');
+
+
+            #foreach($transaction in $transactions)
+                 data.addRows([$transaction.category_description, $transaction.amount]);
+            #end
+
+            // Set chart options
+            var options = {
+                title:'Expenses Report',
+
+                backgroundColor: {
+                    fill: 'white',
+                    fillOpacity: 0.01
+                },
+
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('chart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
 
 </head>
 
@@ -153,6 +188,9 @@
 
         <!--Div that will hold the pie chart-->
         <div id="chart_div" style="width: 500px; height: 300px; position: absolute; top: 0px; right: 0px;"></div>
+
+        <div id="chart" style="width: 500px; height: 300px;"></div>
+
 
 </body>
 </html>

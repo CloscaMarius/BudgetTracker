@@ -33,8 +33,6 @@ Technologies used to create it:
 - web pages: using the Velocity templating engine, to separate the UI code 
   from Java code; UI code consists of basic HTML and CSS code (and a little Javascript)
 - charts: using JavaScript library Google Charts (https://developers.google.com/chart)
-- web services interface: uses REST principles to define the API, and JSON to
-  encode requests/responses (using Gson library)
   
 - includes some unit tests for DB part (using JUnit library)
 

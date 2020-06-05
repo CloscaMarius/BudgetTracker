@@ -2,6 +2,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/common.css">
     <link rel="stylesheet" type="text/css" href="/main2.css">
+
 </head>
 
 
@@ -11,13 +12,18 @@
 <button onclick="location.href='/add_cat'" type="button"> Add new category </button>
     <br><br>
 
+
+
 Sorted by:
 
-    <select onChange="window.location.href=this.value" >
-        <option value='/categories'> - </option>
+    <select id='sort' onChange="window.location.href=this.value" >
+        <option value='/categories' > - </option>
         <option value='/categories?sortedBy=ID_ASC'  > Id asc </option>
         <option value='/categories?sortedBy=ID_DESC'  > Id desc </option>
+        <option value='/categories?sortedBy=DESCR_ASC'  > Description asc </option>
+        <option value='/categories?sortedBy=DESCR_DESC'  > Description desc </option>
     </select> &emsp;
+
 
     Filter:
 
@@ -63,7 +69,7 @@ Sorted by:
                 </td>
                 <td width=5% align=center>
                 <button><a href='/delete_cat/$cat.id' onclick="return confirm('Are you sure you want to delete note with id $cat.id ?')">
-                                   Delete
+                                   #if($transCatId.contains($cat.id))   #else Delete  #end
                              </a></button>
                 </td>
             </tr>

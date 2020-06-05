@@ -11,7 +11,7 @@ public class DbInitService {
     public static void createMissingTables() {
         String sqlCategories = "create table if not exists categories (" +
                 "    id integer primary key autoincrement," +
-                "    description text not null," +
+                "    description text unique not null," +
                 "    type text check (type in ('INCOME', 'EXPENSE')) not null" +
                 ")";
 
