@@ -1,0 +1,78 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/common.css">
+    <link rel="stylesheet" type="text/css" href="/main2.css">
+</head>
+
+
+<body>
+
+    <img src="/budget_tracker_logo2.png" width=175> <br><br>
+<button onclick="location.href='/add_cat'" type="button"> Add new category </button>
+    <br><br>
+
+Sorted by:
+
+    <select onChange="window.location.href=this.value" >
+        <option value='/categories'> - </option>
+        <option value='/categories?sortedBy=ID_ASC'  > Id asc </option>
+        <option value='/categories?sortedBy=ID_DESC'  > Id desc </option>
+    </select> &emsp;
+
+    Filter:
+
+            <select  name='type' onChange="window.location.href=this.value" >
+                <option value='/categories'> - </option>
+                <option value='/categories?type=ALL'  > All </option>
+                <option value='/categories?type=EXPENSE'  > Expense </option>
+                <option value='/categories?type=INCOME'  > Income </option>
+            </select>
+
+    <br><br>
+
+            <button onclick="location.href='/categories?sortedBy=ID_ASC&type=ALL'" type="button"> Refresh </button>
+
+    <br>
+
+    <br>
+
+    <table>
+
+        <tr>
+            <th> Id </th>
+            <th> Description </th>
+            <th> Type </th>
+        </tr>
+
+        #foreach($cat in $categories)
+            <tr>
+                <td width=5% align=center>
+                    $cat.id
+                </td>
+
+                <td width=10% align=center>
+                    $cat.description
+                </td>
+
+                <td width=15% align=center>
+                    $cat.type
+                </td>
+
+                <td width=5% align=center>
+                    <button onclick="location.href='/update_cat/$cat.id'" type="button"> Edit </button>
+                </td>
+                <td width=5% align=center>
+                <button><a href='/delete_cat/$cat.id' onclick="return confirm('Are you sure you want to delete note with id $cat.id ?')">
+                                   Delete
+                             </a></button>
+                </td>
+            </tr>
+        #end
+
+    </table>
+
+    <br>
+    <button onclick="location.href='/main'" type="button"> Back to transactions </button>
+
+</body>
+</html>

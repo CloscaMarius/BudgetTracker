@@ -1,0 +1,103 @@
+<html>
+<head>
+    <!-- include some css files (taken from /public/.. folder) -->
+    <link rel="stylesheet" type="text/css" href="/common.css">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+
+</head>
+
+
+<body>
+
+    <!-- include logo (generated online at: https://cooltext.com) -->
+    <img src="/budget_tracker_logo2.png" width=175>
+    <br>
+
+    <!-- first row above table, with some labels and links -->
+
+    Balance: <b> $balance </b> &nbsp;
+
+
+    <!--Sorted by:
+    #if($sortBy=='DATE_DESC')
+        <a href='/main?sortBy=DATE_ASC' title='Sort by Date asc'> Date desc </a>
+    #else
+        <a href='/main?sortBy=DATE_DESC' title='Sort by Date desc'> Date asc</a>
+    #end
+    &nbsp;-->
+
+ Sorted by:
+
+     <select onChange="window.location.href=this.value" >
+         <option value='/main'> - </option>
+         <option value='/main?sortBy=DATE_DESC'  > Date desc </option>
+         <option value='/main?sortBy=DATE_ASC'  > Date asc </option>
+     </select> &emsp;
+
+
+    <br><br>
+
+    <!-- table of transactions -->
+<button onclick="location.href='/add'" type="button"> Add new transaction </button>
+    <br><br>
+
+    <table>
+
+        <!-- header row first -->
+        <tr>
+            <th> Id </th>
+            <th> Category </th>
+            <th> Date </th>
+            <th> Type </th>
+            <th> Amount($) </th>
+            <th> Details </th>
+        </tr>
+
+        <!-- then for each note from model generate one regular table -->
+        #foreach($transaction in $transactions)
+            <tr>
+                <td width=5% align=center>
+                    <a href='/update/$transaction.id' title='Update'>
+                        $transaction.id
+                    </a>
+                </td>
+
+                <td width=10% align=center>
+                    $transaction.category_description
+                </td>
+
+                <td width=20% align=center>
+                    $transaction.date
+                </td>
+
+                <td width=15% align=center>
+                    $transaction.category_type
+                </td>
+
+                <td width=10% align=center>
+                    $transaction.amount
+                </td>
+
+                <td width=10% align=center>
+                    $!transaction.details
+                </td>
+                <td width=10% align=center>
+             <button><a href='/delete/$transaction.id' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')">
+                   Delete
+             </a></button>
+                </td>
+            </tr>
+        #end
+
+    </table>
+
+    <br><br>
+<button onclick="location.href='/categories'" type="button"> View Categories </button>
+    <br><br>
+<button onclick="location.href='/reports'" type="button"> View Reports </button>
+    <br><br><br>
+
+
+
+</body>
+</html>
