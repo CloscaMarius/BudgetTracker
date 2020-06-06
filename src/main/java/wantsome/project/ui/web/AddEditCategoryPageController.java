@@ -26,7 +26,7 @@ public class AddEditCategoryPageController {
 
     public static String showUpdateForm(Request req, Response res) {
         String id = req.params("id");
-        try {
+
             Optional<CategoryDto> optCat = catDao.getById(Integer.parseInt(id));
             if (optCat.isPresent()) {
                 CategoryDto cat = optCat.get();
@@ -35,10 +35,7 @@ public class AddEditCategoryPageController {
                         cat.getType().name(),
                         "");
             }
-        } catch (Exception e) {
-            System.err.println("Error loading category " + id + ": " + e.getMessage());
-        }
-        return "Error: category " + id + " not found!";
+        throw new RuntimeException("Category " + id + " not found!");
     }
 
     private static String renderAddUpdateForm(String id, String description, String type, String errorMessage) {

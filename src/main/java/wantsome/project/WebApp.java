@@ -52,6 +52,16 @@ public class WebApp {
         //--- REPORTS ---//
         get("/reports", ReportsPageController::showReportsPage);
 
+        //--- Common error handling ---//
+        //basic error handling (to catch/handle any uncaught exceptions)
+        exception(Exception.class, (exception, request, response) ->
+                response.body("<h2>An unexpected error occurred</h2>" +
+                        "Details: " + exception.getMessage() + " <br><br>" +
+                        "<button onclick=\"location.href='/main'\" type=\"button\"> Go to main page </button>"));
+
+        //OR: more complex error handling, with separate controller and vm page
+        //exception(Exception.class, ErrorPageController::handleException);
+
 
     }
 

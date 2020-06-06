@@ -27,7 +27,7 @@ public class AddEditTransactionPageController {
 
     public static String showUpdateForm(Request req, Response res) {
         String id = req.params("id");
-        try {
+
             Optional<TransactionDto> optTransaction = transactionDao.getById(Integer.parseInt(id));
             if (optTransaction.isPresent()) {
                 TransactionDto transaction = optTransaction.get();
@@ -39,10 +39,7 @@ public class AddEditTransactionPageController {
                         transaction.getAmount(),
                         "");
             }
-        } catch (Exception e) {
-            System.err.println("Error loading transaction with id '" + id + "': " + e.getMessage());
-        }
-        return "Error: transaction " + id + " not found!";
+        throw new RuntimeException("Transaction " + id + " not found!");
     }
 
     private static String renderAddUpdateForm(String id, String prevCategoryId,
