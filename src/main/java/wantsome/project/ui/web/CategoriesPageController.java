@@ -44,20 +44,12 @@ public class CategoriesPageController {
                 .map(i -> i.getCategory_id())
                 .collect(Collectors.toList());
 
-        /*List<Long> transDto = transDao.getAll().stream().map(TransactionDto::getCategory_id).collect(toList());
-        List<Long> catDto = catDao.getAll().stream().map(CategoryDto::getId).collect(toList());
-
-        boolean canBeDeleted = transDao.getAll().stream().map(i->i.getCategory_id()).anyMatch(t->t.equals(getId));
-*/
-
-
         Map<String, Object> model = new HashMap<>();
         model.put("categories", categories);
         model.put("transactions", transactions);
         model.put("transCatId", transCatId);
         model.put("sortedBy", sortedBy);
         model.put("type", type);
-        /*model.put("canBeDeleted", canBeDeleted);*/
 
 
         return render(model, "categories.vm");

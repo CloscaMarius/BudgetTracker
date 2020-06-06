@@ -17,23 +17,50 @@
 
     Balance: <b> $balance </b> &nbsp;
 
-
-    <!--Sorted by:
-    #if($sortBy=='DATE_DESC')
-        <a href='/main?sortBy=DATE_ASC' title='Sort by Date asc'> Date desc </a>
-    #else
-        <a href='/main?sortBy=DATE_DESC' title='Sort by Date desc'> Date asc</a>
-    #end
-    &nbsp;-->
-
  Sorted by:
 
      <select onChange="window.location.href=this.value" >
-         <option value='/main'> - </option>
-         <option value='/main?sortBy=DATE_DESC'  > Date desc </option>
-         <option value='/main?sortBy=DATE_ASC'  > Date asc </option>
+         <option value='/main?sortBy=DATE_DESC' #if($sortBy=='DATE_DESC') selected #end > Date desc </option>
+         <option value='/main?sortBy=DATE_ASC' #if($sortBy=='DATE_ASC') selected #end > Date asc </option>
+         <option value='/main?sortBy=AMOUNT_DESC' #if($sortBy=='AMOUNT_DESC') selected #end > Amount desc </option>
+         <option value='/main?sortBy=AMOUNT_ASC' #if($sortBy=='AMOUNT_ASC') selected #end > Amount asc </option>
+         <option value='/main?sortBy=CATEGORY_DESC' #if($sortBy=='CATEGORY_DESC') selected #end > Category desc </option>
+         <option value='/main?sortBy=CATEGORY_ASC' #if($sortBy=='CATEGORY_ASC') selected #end > Category asc </option>
      </select> &emsp;
 
+<!--Filter by type:
+
+        <select  name='type' onChange="window.location.href=this.value" >
+            <option value='/main'> - </option>
+            <option value='/main?type=ALL' #if($type=='ALL') selected #end > All </option>
+            <option value='/main?type=EXPENSE' #if($type=='EXPENSE') selected #end > Expense </option>
+            <option value='/main?type=INCOME' #if($type=='INCOME') selected #end > Income </option>
+        </select> &emsp;
+
+Filter by category:
+
+        <select  name='category' onChange="window.location.href=this.value" >
+             <option value='/main'> - </option>
+             <option value='/main?category=all'#if($category=='all') selected #end> All </option>
+             #foreach($transaction in $allTransactions)
+             <option value='/main?category=$transaction.category_description'  > $transaction.category_description </option>
+             #end
+        </select> &emsp;-->
+
+                Filter by:
+
+                <select name='filter' onChange="window.location.href=this.value">
+                    <option value='/main?category=all&type=ALL' #if($category=='all') selected #end > All </option>
+                    <optgroup label='Type' >
+                      <option value='/main?type=EXPENSE&category=all' #if($type=='EXPENSE') selected #end > Expense </option>
+                      <option value='/main?type=INCOME&category=all' #if($type=='INCOME') selected #end > Income </option>
+                    </optgroup>
+                    <optgroup label='Category' >
+                      #foreach($transaction in $allTransactions)
+                      <option value='/main?category=$transaction.category_description&type=ALL' #if($category==$transaction.category_description) selected #end > $transaction.category_description </option>
+                      #end
+                    </optgroup>
+                  </select>
 
     <br><br>
 
@@ -57,9 +84,9 @@
         #foreach($transaction in $transactions)
             <tr>
                 <td width=5% align=center>
-                    <a href='/update/$transaction.id' title='Update'>
+
                         $transaction.id
-                    </a>
+
                 </td>
 
                 <td width=10% align=center>
@@ -81,6 +108,11 @@
                 <td width=10% align=center>
                     $!transaction.details
                 </td>
+
+                <td width=5% align=center>
+                    <button onclick="location.href='/update/$transaction.id'" type="button"> Edit </button>
+                </td>
+
                 <td width=10% align=center>
              <button><a href='/delete/$transaction.id' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')">
                    Delete

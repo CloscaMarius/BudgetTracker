@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import wantsome.project.DbManager;
+import wantsome.project.db.DbManager;
 import wantsome.project.db.dto.TransactionDto;
 import wantsome.project.ui.web.TransactionStats;
 
@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 public class TransactionDaoTest {
 
-    private static final String TEST_DB_FILE = "src/main/resources/public/budget_tracker_test.db";
+    private static final String TEST_DB_FILE = "src/main/resources/budget_tracker_test.db";
 
 
     private static final List<TransactionDto> sampleTransactions = Arrays.asList(

@@ -1,4 +1,4 @@
-package wantsome.project;
+package wantsome.project.db;
 
 import org.sqlite.SQLiteConfig;
 
@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbManager {
-    private static String dbFile = "src/main/resources/public/budget_tracker.db";
+    private static String dbFile = "src/main/resources/budget_tracker.db";
 
 
     public static void setDbFile(String newDbFile) {

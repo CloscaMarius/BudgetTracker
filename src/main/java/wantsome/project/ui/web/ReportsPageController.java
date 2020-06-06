@@ -99,7 +99,8 @@ public class ReportsPageController {
 
     }
 
-    private static List<TransactionFullDto> getTransactionsToDisplay(List<TransactionFullDto> allTransactions, Type type, SortBy sortBy, String date1, String date2) {
+    private static List<TransactionFullDto> getTransactionsToDisplay
+            (List<TransactionFullDto> allTransactions, Type type, SortBy sortBy, String date1, String date2) {
         List<TransactionFullDto> transactions = allTransactions;
 
 

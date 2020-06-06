@@ -96,30 +96,28 @@
     Sorted by:
 
     <select onChange="window.location.href=this.value" >
-        <option value='/reports'> - </option>
-        <option value='/reports?sortBy=DATE_DESC'  > Date desc </option>
-        <option value='/reports?sortBy=DATE_ASC'  > Date asc </option>
-        <option value='/reports?sortBy=AMOUNT_DESC'  > Amount desc </option>
-        <option value='/reports?sortBy=AMOUNT_ASC'  > Amount asc </option>
+        <option value='/reports?sortBy=DATE_DESC' #if($sortBy=='DATE_DESC') selected #end > Date desc </option>
+        <option value='/reports?sortBy=DATE_ASC' #if($sortBy=='DATE_ASC') selected #end > Date asc </option>
+        <option value='/reports?sortBy=AMOUNT_DESC' #if($sortBy=='AMOUNT_DESC') selected #end > Amount desc </option>
+        <option value='/reports?sortBy=AMOUNT_ASC' #if($sortBy=='AMOUNT_ASC') selected #end > Amount asc </option>
     </select> &emsp;
 
 
     Filter:
 
         <select  name='category_type' onChange="window.location.href=this.value" >
-            <option value='/reports'> - </option>
-            <option value='/reports?category_type=ALL'  > All </option>
-            <option value='/reports?category_type=EXPENSE'  > Expense </option>
-            <option value='/reports?category_type=INCOME'  > Income </option>
+            <option value='/reports?category_type=ALL' #if($category_type=='ALL') selected #end > All </option>
+            <option value='/reports?category_type=EXPENSE' #if($category_type=='EXPENSE') selected #end > Expense </option>
+            <option value='/reports?category_type=INCOME' #if($category_type=='INCOME') selected #end > Income </option>
         </select>
 
 <br><br>
     Filter by Date:
 
-    <form action='/reports'>
-      <input type='date' name='date1' >
+    <form action='/reports' >
+      <input type='date' name='date1' value='$date1' >
       -
-      <input type='date' name='date2' >
+      <input type='date' name='date2' value='$date2'>
 
       <input type='submit'>
     </form>

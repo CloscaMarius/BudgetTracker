@@ -1,6 +1,6 @@
 package wantsome.project.db.service;
 
-import wantsome.project.DbManager;
+import wantsome.project.db.DbManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
