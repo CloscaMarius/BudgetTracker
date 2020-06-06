@@ -114,9 +114,18 @@ Filter by category:
                 </td>
 
                 <td width=10% align=center>
-             <button><a href='/delete/$transaction.id' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')">
+             <!--<button><a href='/delete/$transaction.id' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')">
                    Delete
-             </a></button>
+             </a></button>-->
+
+                <!--<form action='/delete/$transaction.id'>
+                <input type="submit" value='Delete' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')" >
+                </form>-->
+
+                <button type='submit'  onclick="if(confirm('Are you sure you want to delete note with id $transaction.id ?')) location.href='/delete/$transaction.id'">
+                                   Delete
+                             </button>
+
                 </td>
             </tr>
         #end
