@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 import static wantsome.project.ui.web.SparkUtil.render;
 
 public class ReportsPageController {
 
-    public enum SortBy {
+    public enum Sorted {
         DATE_DESC,
         DATE_ASC,
         AMOUNT_DESC,
@@ -30,35 +30,77 @@ public class ReportsPageController {
 
         List<TransactionFullDto> allTransactions = transacDao.getAllFull();
 
-
         Type type = getTypeFromParamOrSes(req);
 
-        SortBy sortBy = getSortByFromParamOrSes(req);
+        Sorted sorted = getSortedFromParamOrSes(req);
 
         String date1 = getDate1FromParamOrSes(req);
         String date2 = getDate2FromParamOrSes(req);
 
-        double balance = getAmountByType(allTransactions, Type.ALL, sortBy, date1, date2);
-        double income = getAmountByType(allTransactions, Type.INCOME, sortBy, date1, date2);
-        double expense = getAmountByType(allTransactions, Type.EXPENSE, sortBy, date1, date2);
+        double balance = getAmountByType(allTransactions, Type.ALL, sorted, date1, date2);
+        double income = getAmountByType(allTransactions, Type.INCOME, sorted, date1, date2);
+        double expense = getAmountByType(allTransactions, Type.EXPENSE, sorted, date1, date2);
         String amount = getAmountFromParamOrSes(req);
 
-        List<TransactionFullDto> transactions = getTransactionsToDisplay(allTransactions, type, sortBy, date1, date2);
+        List<TransactionFullDto> transactions = getTransactionsToDisplay(allTransactions, type, sorted, date1, date2);
+
+        Map<String, Double> incomeCategories = getGroupedCategories(Type.INCOME, date1, date2);
+
+        Map<String, Double> expenseCategories = getGroupedCategories(Type.EXPENSE, date1, date2);
 
         Map<String, Object> model = new HashMap<>();
         model.put("transactions", transactions);
         model.put("balance", balance);
-        model.put("sortBy", sortBy);
+        model.put("sorted", sorted);
         model.put("category_type", type);
         model.put("date1", date1);
         model.put("date2", date2);
         model.put("income", income);
         model.put("expense", expense);
-        model.put("amount", amount);
+        model.put("incomeCategories", incomeCategories);
+        model.put("expenseCategories", expenseCategories);
         return render(model, "/reports.vm");
     }
 
-    private static double getAmountByType(List<TransactionFullDto> allTransactions, Type type, SortBy sortBy, String date1, String date2) {
+    private static Map<String, Double> getGroupedCategories(Type type, String date1, String date2) {
+
+        List<TransactionFullDto> allTransactions = transacDao.getAllFull();
+
+
+        if ((date1 != null && !date1.isEmpty()) && (date2 != null && !date2.isEmpty())) {
+
+            return allTransactions.stream()
+                    .filter(i -> i.getCategory_type() == type)
+                    .filter(i -> i.getDate().equals(Date.valueOf(date1)) ||
+                            i.getDate().after(Date.valueOf(date1)) &&
+                                    i.getDate().before(Date.valueOf(date2)) ||
+                            i.getDate().equals(Date.valueOf(date2)))
+                    .collect(groupingBy(n -> n.getCategory_description(), summingDouble(n -> n.getAmount())));
+
+
+        } else if ((date1 != null && !date1.isEmpty())) {
+
+            return allTransactions.stream()
+                    .filter(i -> i.getCategory_type() == type)
+                    .filter(i -> i.getDate().equals(Date.valueOf(date1)) ||
+                            i.getDate().after(Date.valueOf(date1)))
+                    .collect(groupingBy(n -> n.getCategory_description(), summingDouble(n -> n.getAmount())));
+
+        } else if ((date2 != null && !date2.isEmpty())) {
+
+            return allTransactions.stream()
+                    .filter(i -> i.getCategory_type() == type)
+                    .filter(i -> i.getDate().before(Date.valueOf(date2)) ||
+                            i.getDate().equals(Date.valueOf(date2)))
+                    .collect(groupingBy(n -> n.getCategory_description(), summingDouble(n -> n.getAmount())));
+        } else {
+            return allTransactions.stream()
+                    .filter(i -> i.getCategory_type() == type)
+                    .collect(groupingBy(n -> n.getCategory_description(), summingDouble(n -> n.getAmount())));
+        }
+    }
+
+    private static double getAmountByType(List<TransactionFullDto> allTransactions, Type type, Sorted sorted, String date1, String date2) {
         double amount = 0;
 
         if ((date1 != null && !date1.isEmpty()) && (date2 != null && !date2.isEmpty()) && (type == Type.INCOME)) {
@@ -76,21 +118,21 @@ public class ReportsPageController {
 
         } else if ((type == Type.EXPENSE)) {
 
-            amount = getTransactionsToDisplay(allTransactions, type, sortBy, date1, date2)
+            amount = getTransactionsToDisplay(allTransactions, type, sorted, date1, date2)
                     .stream()
                     .filter(i -> i.getCategory_type() == Type.EXPENSE)
                     .map(i -> i.getAmount())
                     .reduce((double) 0, (a, b) -> a + b);
 
         } else if ((type == Type.INCOME)) {
-            amount = getTransactionsToDisplay(allTransactions, type, sortBy, date1, date2)
+            amount = getTransactionsToDisplay(allTransactions, type, sorted, date1, date2)
                     .stream()
                     .filter(i -> i.getCategory_type() == Type.INCOME)
                     .map(i -> i.getAmount())
                     .reduce((double) 0, (a, b) -> a + b);
         } else if ((type == Type.ALL)) {
-            amount = getAmountByType(allTransactions, Type.INCOME, sortBy, date1, date2) -
-                    getAmountByType(allTransactions, Type.EXPENSE, sortBy, date1, date2);
+            amount = getAmountByType(allTransactions, Type.INCOME, sorted, date1, date2) -
+                    getAmountByType(allTransactions, Type.EXPENSE, sorted, date1, date2);
 
         }
 
@@ -100,7 +142,7 @@ public class ReportsPageController {
     }
 
     private static List<TransactionFullDto> getTransactionsToDisplay
-            (List<TransactionFullDto> allTransactions, Type type, SortBy sortBy, String date1, String date2) {
+            (List<TransactionFullDto> allTransactions, Type type, Sorted sorted, String date1, String date2) {
         List<TransactionFullDto> transactions = allTransactions;
 
 
@@ -137,11 +179,11 @@ public class ReportsPageController {
 
         return transactions.stream()
                 .sorted((n1, n2) -> {
-                    if (sortBy == SortBy.DATE_DESC) {
+                    if (sorted == Sorted.DATE_DESC) {
                         return n2.getDate().compareTo(n1.getDate());
-                    } else if (sortBy == SortBy.DATE_ASC) {
+                    } else if (sorted == Sorted.DATE_ASC) {
                         return n1.getDate().compareTo(n2.getDate());
-                    } else if (sortBy == SortBy.AMOUNT_DESC) {
+                    } else if (sorted == Sorted.AMOUNT_DESC) {
                         return Double.compare(n2.getAmount(), n1.getAmount());
                     } else {
                         return Double.compare(n1.getAmount(), n2.getAmount());
@@ -171,14 +213,14 @@ public class ReportsPageController {
         return param;
     }
 
-    private static SortBy getSortByFromParamOrSes(Request req) {
-        String param = req.queryParams("sortBy");
+    private static Sorted getSortedFromParamOrSes(Request req) {
+        String param = req.queryParams("sorted");
         if (param != null) {
-            req.session().attribute("sortBy", param);
+            req.session().attribute("sorted", param);
         } else {
-            param = req.session().attribute("sortBy");
+            param = req.session().attribute("sorted");
         }
-        return param != null ? SortBy.valueOf(param) : SortBy.DATE_DESC;
+        return param != null ? Sorted.valueOf(param) : Sorted.DATE_DESC;
     }
 
     private static String getDate1FromParamOrSes(Request req) {

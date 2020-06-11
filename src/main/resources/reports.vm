@@ -48,12 +48,14 @@
             // Create the data table for the chart
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Status');
-            data.addColumn('number', 'Count');
+            data.addColumn('number', 'Amount');
 
+            data.addRows([
+                            #foreach($entry in $expenseCategories.entrySet())
+                                ['$entry.key', $entry.value],
+                            #end
+                        ]);
 
-            #foreach($transaction in $transactions)
-                 data.addRows([$transaction.category_description, $transaction.amount]);
-            #end
 
             // Set chart options
             var options = {
@@ -63,15 +65,59 @@
                     fill: 'white',
                     fillOpacity: 0.01
                 },
-
+                slices: {
+                        0: { color: 'red' },
+                        1: { color: 'DarkOrange' },
+                        2: { color: 'Salmon' },
+                        3: { color: 'Crimson' }
+                      }
             };
 
             // Instantiate and draw the chart
-            var chart = new google.visualization.PieChart(document.getElementById('chart'));
+            var chart = new google.visualization.PieChart(document.getElementById('expensesChart'));
             chart.draw(data, options);
         }
     </script>
 
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            // Create the data table for the chart
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Status');
+            data.addColumn('number', 'Amount');
+
+            data.addRows([
+                            #foreach($entry in $incomeCategories.entrySet())
+                                ['$entry.key', $entry.value],
+                            #end
+                        ]);
+
+
+            // Set chart options
+            var options = {
+                title:'Income Report',
+                backgroundColor: {
+                    fill: 'white',
+                    fillOpacity: 0.01
+                },
+            slices: {
+                        0: { color: 'green' },
+                        1: { color: 'SlateBlue' },
+                        2: { color: 'blue' },
+                        3: { color: 'DarkGreen' }
+                      }
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('incomeChart'));
+            chart.draw(data, options);
+        }
+    </script>
 
 
 </head>
@@ -96,10 +142,10 @@
     Sorted by:
 
     <select onChange="window.location.href=this.value" >
-        <option value='/reports?sortBy=DATE_DESC' #if($sortBy=='DATE_DESC') selected #end > Date desc </option>
-        <option value='/reports?sortBy=DATE_ASC' #if($sortBy=='DATE_ASC') selected #end > Date asc </option>
-        <option value='/reports?sortBy=AMOUNT_DESC' #if($sortBy=='AMOUNT_DESC') selected #end > Amount desc </option>
-        <option value='/reports?sortBy=AMOUNT_ASC' #if($sortBy=='AMOUNT_ASC') selected #end > Amount asc </option>
+        <option value='/reports?sorted=DATE_DESC' #if($sorted=='DATE_DESC') selected #end > Date desc </option>
+        <option value='/reports?sorted=DATE_ASC' #if($sorted=='DATE_ASC') selected #end > Date asc </option>
+        <option value='/reports?sorted=AMOUNT_DESC' #if($sorted=='AMOUNT_DESC') selected #end > Amount desc </option>
+        <option value='/reports?sorted=AMOUNT_ASC' #if($sorted=='AMOUNT_ASC') selected #end > Amount asc </option>
     </select> &emsp;
 
 
@@ -187,8 +233,14 @@
         <!--Div that will hold the pie chart-->
         <div id="chart_div" style="width: 500px; height: 300px; position: absolute; top: 0px; right: 0px;"></div>
 
-        <div id="chart" style="width: 500px; height: 300px;"></div>
+        <!--<div id="expensesChart" style="width: 500px; height: 300px;"></div>
 
+        <div id="incomeChart" style="width: 500px; height: 300px;"></div>-->
+
+<div id="container">
+        <div id="expensesChart" style="width: 500px;height: 300px; float: left";></div>
+        <div id="incomeChart" style="width: 500px;height: 300px; float: right"></div>
+    </div>
 
 </body>
 </html>

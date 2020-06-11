@@ -9,6 +9,7 @@ import wantsome.project.db.service.TransactionDao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static wantsome.project.ui.web.SparkUtil.render;
@@ -40,9 +41,12 @@ public class TransactionsPageController {
 
         List<TransactionFullDto> transactions = getTransactionsToDisplay(allTransactions, sortBy, type, category);
 
+        List<String> allDistinctTransactions = transacDao.getAllFull()
+                .stream().map(n -> n.getCategory_description()).distinct().collect(Collectors.toList());
+
         Map<String, Object> model = new HashMap<>();
         model.put("transactions", transactions);
-        model.put("allTransactions", allTransactions);
+        model.put("allDistinctTransactions", allDistinctTransactions);
         model.put("category", category);
         model.put("balance", balance);
         model.put("sortBy", sortBy);

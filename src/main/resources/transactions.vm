@@ -42,7 +42,7 @@ Filter by category:
         <select  name='category' onChange="window.location.href=this.value" >
              <option value='/main'> - </option>
              <option value='/main?category=all'#if($category=='all') selected #end> All </option>
-             #foreach($transaction in $allTransactions)
+             #foreach($transaction in $allDistinctTransactions)
              <option value='/main?category=$transaction.category_description'  > $transaction.category_description </option>
              #end
         </select> &emsp;-->
@@ -56,8 +56,8 @@ Filter by category:
                       <option value='/main?type=INCOME&category=all' #if($type=='INCOME') selected #end > Income </option>
                     </optgroup>
                     <optgroup label='Category' >
-                      #foreach($transaction in $allTransactions)
-                      <option value='/main?category=$transaction.category_description&type=ALL' #if($category==$transaction.category_description) selected #end > $transaction.category_description </option>
+                      #foreach($transaction in $allDistinctTransactions)
+                      <option value='/main?category=$transaction&type=ALL' #if($category==$transaction) selected #end > $transaction </option>
                       #end
                     </optgroup>
                   </select>

@@ -8,8 +8,8 @@ Transactions are grouped into different categories.
 Supported actions:
  - add/update/delete transactions
  - add/update/delete categories
- - view all transactions and sort them by date
- - view all categories, sort them by id, and filter them by type
+ - view all transactions and sort them by date, amount or category and filter them by types or categories
+ - view all categories, sort them by id or description and filter them by type
  - sort the transactions by date or amount, filter them by type and by date
 
 ---
