@@ -8,11 +8,7 @@
 
 <body>
 
-    <img src="/budget_tracker_logo2.png" width=175> <br><br>
-<button onclick="location.href='/add_cat'" type="button"> Add new category </button>
-    <br><br>
-
-
+    <img src="/budget_tracker_logo2.png" width=175> <br>
 
 Sorted by:
 
@@ -30,15 +26,13 @@ Sorted by:
                 <option value='/categories?type=ALL' #if($type=='ALL') selected #end > All </option>
                 <option value='/categories?type=EXPENSE' #if($type=='EXPENSE') selected #end > Expense </option>
                 <option value='/categories?type=INCOME' #if($type=='INCOME') selected #end > Income </option>
-            </select>
+            </select> &emsp;
+
+            <!--<button onclick="location.href='/categories?sortedBy=ID_ASC&type=ALL'" type="button"> Reset </button>-->
 
     <br><br>
-
-            <button onclick="location.href='/categories?sortedBy=ID_ASC&type=ALL'" type="button"> Refresh </button>
-
-    <br>
-
-    <br>
+            <button onclick="location.href='/add_cat'" type="button"> Add new category </button>
+    <br><br>
 
     <table>
 
@@ -54,18 +48,19 @@ Sorted by:
                     $cat.id
                 </td>
 
-                <td width=10% align=center>
+                <td width=20% align=center>
                     $cat.description
                 </td>
 
-                <td width=15% align=center>
-                    $cat.type
+                <td width=20% align=center>
+                    #if($cat.type=='EXPENSE') Expense #else Income #end
                 </td>
 
-                <td width=5% align=center>
+                <td width=1% align=center>
                     <button onclick="location.href='/update_cat/$cat.id'" type="button"> Edit </button>
                 </td>
-                <td width=5% align=center>
+
+                <td width=1% align=center>
                 #if(!$transCatId.contains($cat.id))
                 <!--<button><a href='/delete_cat/$cat.id' onclick="return confirm('Are you sure you want to delete note with id $cat.id ?')">
                               Delete
@@ -74,14 +69,14 @@ Sorted by:
                 <button type='submit'  onclick="if(confirm('Are you sure you want to delete note with id $cat.id ?')) location.href='/delete_cat/$cat.id'">
                              Delete #end
                 </button>
-
                 </td>
+
             </tr>
         #end
 
     </table>
 
-    <br>
+    <br><br>
     <button onclick="location.href='/main'" type="button"> Back to transactions </button>
 
 </body>

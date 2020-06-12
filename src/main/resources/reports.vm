@@ -127,6 +127,11 @@
 
     <!-- include logo (generated online at: https://cooltext.com) -->
     <img src="/budget_tracker_logo2.png" width=175>
+
+    <!--<div id="chart_div" style="width: 500px;height: 300px;z-index: -1; float: right; "></div>-->
+    <div id="chart_div" style="position: absolute; right: 0px; top: 0px;"></div>
+
+
     <br>
 
     <!-- first row above table, with some labels and links -->
@@ -155,7 +160,9 @@
             <option value='/reports?category_type=ALL' #if($category_type=='ALL') selected #end > All </option>
             <option value='/reports?category_type=EXPENSE' #if($category_type=='EXPENSE') selected #end > Expense </option>
             <option value='/reports?category_type=INCOME' #if($category_type=='INCOME') selected #end > Income </option>
-        </select>
+        </select>&emsp;
+
+        <button onclick="location.href='/reports?date1=&date2=&category_type=ALL'" type="button"> Reset </button>
 
 <br><br>
     Filter by Date:
@@ -163,17 +170,10 @@
     <form action='/reports' >
       <input type='date' name='date1' value='$date1' >
       -
-      <input type='date' name='date2' value='$date2'>
+      <input type='date' name='date2' value='$date2'>&emsp;
 
       <input type='submit'>
     </form>
-
-    <br>
-
-    <button onclick="location.href='/reports?date1=&date2=&category_type=ALL'" type="button"> Refresh </button>
-
-    <br>
-
 
 
     <!-- table of transactions -->
@@ -210,7 +210,7 @@
                 </td>
 
                 <td width=15% align=center>
-                    $transaction.category_type
+                    #if($transaction.category_type=='EXPENSE') Expense #else Income #end
                 </td>
 
                 <td width=10% align=center>
@@ -231,7 +231,7 @@
     <br><br><br>
 
         <!--Div that will hold the pie chart-->
-        <div id="chart_div" style="width: 500px; height: 300px; position: absolute; top: 0px; right: 0px;"></div>
+        <!--<div id="chart_div" style="width: 500px; height: 300px; position: absolute; top: 0px; right: 0px; display:inline-block;"></div>-->
 
         <!--<div id="expensesChart" style="width: 500px; height: 300px;"></div>
 

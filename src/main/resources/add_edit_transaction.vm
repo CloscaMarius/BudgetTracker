@@ -52,13 +52,13 @@
             </tr>
 
             <tr>
-                <td> Details (optional): </td>
-                <td> <input type='text' name='details' value='$prevDetails' > </td>
+                <td> Amount: </td>
+                <td> <input type='number' step='0.01' name='amount' value='$prevAmount' required> </td>
             </tr>
 
             <tr>
-                <td> Amount: </td>
-                <td> <input type='number' step='0.01' name='amount' value='$prevAmount' required> </td>
+                <td> Details (optional): </td>
+                <td> <input type='text' name='details' value='$prevDetails' > </td>
             </tr>
 
             <tr>

@@ -12,7 +12,7 @@ public class WebApp {
 
 
         //init db
-        DbInitService.createMissingTables();
+        DbInitService.createTablesAndInitialData();
 
         //configure and start web server
         staticFileLocation("/public"); //location of static resources (like images, .css ..), relative to /resources dir
@@ -58,9 +58,6 @@ public class WebApp {
                 response.body("<h2>An unexpected error occurred</h2>" +
                         "Details: " + exception.getMessage() + " <br><br>" +
                         "<button onclick=\"location.href='/main'\" type=\"button\"> Go to main page </button>"));
-
-        //OR: more complex error handling, with separate controller and vm page
-        //exception(Exception.class, ErrorPageController::handleException);
 
 
     }

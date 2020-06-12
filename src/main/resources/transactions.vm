@@ -98,7 +98,7 @@ Filter by category:
                 </td>
 
                 <td width=15% align=center>
-                    $transaction.category_type
+                    #if($transaction.category_type=='EXPENSE') Expense #else Income #end
                 </td>
 
                 <td width=10% align=center>
@@ -113,7 +113,7 @@ Filter by category:
                     <button onclick="location.href='/update/$transaction.id'" type="button"> Edit </button>
                 </td>
 
-                <td width=10% align=center>
+                <td width=5% align=center>
              <!--<button><a href='/delete/$transaction.id' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')">
                    Delete
              </a></button>-->
@@ -133,8 +133,8 @@ Filter by category:
     </table>
 
     <br><br>
-<button onclick="location.href='/categories'" type="button"> View Categories </button>
-    <br><br>
+<button onclick="location.href='/categories'" type="button"> View Categories </button>&nbsp;
+
 <button onclick="location.href='/reports'" type="button"> View Reports </button>
     <br><br><br>
 
