@@ -1,13 +1,11 @@
 package wantsome.project.db.service;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import wantsome.project.db.DbManager;
 import wantsome.project.db.dto.TransactionDto;
 import wantsome.project.ui.web.TransactionStats;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +29,7 @@ public class TransactionDaoTest {
     @BeforeClass
     public static void initDbBeforeAnyTests() {
         DbManager.setDbFile(TEST_DB_FILE); //use a separate db for test, to avoid overwriting the real one
-        DbInitService.createMissingTables();
+        DbInitService.createTablesAndInitialData();
     }
 
 
@@ -53,11 +51,10 @@ public class TransactionDaoTest {
         assertTrue(dao.getAll().isEmpty());
     }
 
-    //need a sample db file for Transactions test with foreign keys
-    /*@AfterClass
+    @AfterClass
     public static void deleteDbFileAfterAllTests() {
         new File(TEST_DB_FILE).delete();
-    }*/
+    }
 
 
     @Test

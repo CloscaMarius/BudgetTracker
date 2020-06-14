@@ -15,10 +15,10 @@ Supported actions:
 ---
 ### 2. Setup
 
-No setup is needed, just start the application. On first startup it will create
-an empty local database (named 'budget_tracker.db'), where it will save the future data.
+No setup is needed, just start the application. If the database is missing (like on first startup), it will create a new database (of type SQLite,
+stored in a local file named 'budget_tracker.db'), and use it to save the future data.
 
-Once started, navigate with a web browser at url: http://localhost:4567/main
+Once started, navigate with a web browser at url: <http://localhost:4567/main>
 
 ---
 ### 3. Technical details
@@ -37,13 +37,16 @@ Technologies used to create it:
 - includes some unit tests for DB part (using JUnit library)
 
 Code structure:
+
 - java code is organized in packages by its role, on layers:
   - db - database part, including DTOs and DAOs, as well as the code to init and connect to the db
   - ui - code related to the interface/presentation layer
   - root package - the main classes for the types of interfaces it supports
-- web resources are found in main/resources folder:
-  - public - static resources to be served by server directly (images, css files)
-  - directly in resources - the Velocity templates
+  
+- web resources are found in `main/resources` folder:
+  - under `/public` folder - static resources to be served by the web server
+      directly (images, css files)
+  - all other (directly under `/resources`) - the Velocity templates
   
 Note: the focus of this project is on the back-end part, not so much on front-end part.
 

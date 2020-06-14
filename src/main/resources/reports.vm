@@ -126,7 +126,7 @@
 <body>
 
     <!-- include logo (generated online at: https://cooltext.com) -->
-    <img src="/budget_tracker_logo2.png" width=175>
+    <img src="/budget_tracker_logo.png" width=175>
 
     <!--<div id="chart_div" style="width: 500px;height: 300px;z-index: -1; float: right; "></div>-->
     <div id="chart_div" style="position: absolute; right: 0px; top: 0px;"></div>

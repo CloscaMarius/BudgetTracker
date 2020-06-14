@@ -40,7 +40,6 @@ public class ReportsPageController {
         double balance = getAmountByType(allTransactions, Type.ALL, sorted, date1, date2);
         double income = getAmountByType(allTransactions, Type.INCOME, sorted, date1, date2);
         double expense = getAmountByType(allTransactions, Type.EXPENSE, sorted, date1, date2);
-        String amount = getAmountFromParamOrSes(req);
 
         List<TransactionFullDto> transactions = getTransactionsToDisplay(allTransactions, type, sorted, date1, date2);
 
@@ -203,16 +202,6 @@ public class ReportsPageController {
         return param != null ? Type.valueOf(param) : Type.ALL;
     }
 
-    private static String getAmountFromParamOrSes(Request req) {
-        String param = req.queryParams("amount");
-        if (param != null) {
-            req.session().attribute("amount", param);
-        } else {
-            param = req.session().attribute("amount");
-        }
-        return param;
-    }
-
     private static Sorted getSortedFromParamOrSes(Request req) {
         String param = req.queryParams("sorted");
         if (param != null) {
@@ -242,17 +231,6 @@ public class ReportsPageController {
             param = req.session().attribute("date2");
         }
         return param;
-    }
-
-    public static Object handleDeleteRequest(Request req, Response res) {
-        String id = req.params("id");
-        try {
-            transacDao.deleteById(Long.parseLong(id));
-        } catch (Exception e) {
-            System.out.println("Error deleting transaction with id '" + id + "': " + e.getMessage());
-        }
-        res.redirect("/main");
-        return res;
     }
 
 }

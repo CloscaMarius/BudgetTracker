@@ -35,7 +35,7 @@ public class AddEditTransactionPageController {
                         String.valueOf(transaction.getId()),
                         String.valueOf(transaction.getCategory_id()),
                         transaction.getDate().toString(),
-                        transaction.getDetails() != null ? transaction.getDetails().toString() : "",
+                        transaction.getDetails() != null ? transaction.getDetails() : "",
                         transaction.getAmount(),
                         "");
             }

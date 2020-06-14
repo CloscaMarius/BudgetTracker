@@ -1,14 +1,14 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="/common.css">
-    <link rel="stylesheet" type="text/css" href="/main2.css">
+    <link rel="stylesheet" type="text/css" href="/categories.css">
 
 </head>
 
 
 <body>
 
-    <img src="/budget_tracker_logo2.png" width=175> <br>
+    <img src="/budget_tracker_logo.png" width=175> <br>
 
 Sorted by:
 

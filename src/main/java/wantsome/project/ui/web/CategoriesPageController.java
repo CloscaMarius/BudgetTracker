@@ -102,8 +102,6 @@ public class CategoriesPageController {
             categories = allCategories.stream()
                     .filter(i -> i.getType() == Type.EXPENSE)
                     .collect(toList());
-        } else {
-
         }
 
         return categories.stream()

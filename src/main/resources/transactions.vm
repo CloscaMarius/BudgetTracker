@@ -10,7 +10,7 @@
 <body>
 
     <!-- include logo (generated online at: https://cooltext.com) -->
-    <img src="/budget_tracker_logo2.png" width=175>
+    <img src="/budget_tracker_logo.png" width=175>
     <br>
 
     <!-- first row above table, with some labels and links -->
