@@ -7,7 +7,7 @@
 
 <body>
 
-    <img src="/budget_tracker_logo2.png" width=175>
+    <img src="/budget_tracker_logo.png" width=175>
     <br>
 
     <h3 class='title'>
@@ -33,6 +33,7 @@
             <tr>
                 <td> Description: </td>
                 <td> <input type='text' name='description' value='$prevDescription' required> </td>
+
             </tr>
 
             <tr>

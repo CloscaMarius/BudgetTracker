@@ -12,7 +12,7 @@ public class WebApp {
 
 
         //init db
-        DbInitService.createMissingTables();
+        DbInitService.createTablesAndInitialData();
 
         //configure and start web server
         staticFileLocation("/public"); //location of static resources (like images, .css ..), relative to /resources dir
@@ -51,6 +51,13 @@ public class WebApp {
 
         //--- REPORTS ---//
         get("/reports", ReportsPageController::showReportsPage);
+
+        //--- Common error handling ---//
+        //basic error handling (to catch/handle any uncaught exceptions)
+        exception(Exception.class, (exception, request, response) ->
+                response.body("<h2>An unexpected error occurred</h2>" +
+                        "Details: " + exception.getMessage() + " <br><br>" +
+                        "<button onclick=\"location.href='/main'\" type=\"button\"> Go to main page </button>"));
 
 
     }

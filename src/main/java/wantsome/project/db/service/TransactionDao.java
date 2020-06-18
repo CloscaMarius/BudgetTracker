@@ -1,7 +1,7 @@
 package wantsome.project.db.service;
 
 
-import wantsome.project.DbManager;
+import wantsome.project.db.DbManager;
 import wantsome.project.db.dto.TransactionDto;
 import wantsome.project.db.dto.TransactionFullDto;
 import wantsome.project.db.dto.Type;

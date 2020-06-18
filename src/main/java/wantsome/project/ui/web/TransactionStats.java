@@ -24,7 +24,7 @@ public class TransactionStats {
     }
 
     public static double allIncome() {
-        double totalIncome = 0;
+        double totalIncome;
 
         totalIncome = transacDao.getAllIncome()
                 .stream()
@@ -39,7 +39,7 @@ public class TransactionStats {
     }
 
     public static double expensesByDateInterval(Date dateMin, Date dateMax) {
-        double totalExpenses = 0;
+        double totalExpenses;
 
         totalExpenses = transacDao.getExpensesByDateInterval(dateMin, dateMax)
                 .stream()
@@ -55,7 +55,7 @@ public class TransactionStats {
     }
 
     public static double allExpenses() {
-        double totalExpenses = 0;
+        double totalExpenses;
 
         totalExpenses = transacDao.getAllExpenses()
                 .stream()
@@ -70,7 +70,7 @@ public class TransactionStats {
     }
 
     public static double balanceByDateInterval(Date dateMin, Date dateMax) {
-        double balance = 0;
+        double balance;
 
         balance = incomeByDateInterval(dateMin, dateMax) - expensesByDateInterval(dateMin, dateMax);
 
@@ -80,7 +80,7 @@ public class TransactionStats {
     }
 
     public static double balance() {
-        double balance = 0;
+        double balance;
 
         balance = allIncome() - allExpenses();
 

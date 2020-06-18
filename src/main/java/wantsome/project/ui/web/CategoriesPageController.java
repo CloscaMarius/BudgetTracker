@@ -3,12 +3,15 @@ package wantsome.project.ui.web;
 import spark.Request;
 import spark.Response;
 import wantsome.project.db.dto.CategoryDto;
+import wantsome.project.db.dto.TransactionDto;
 import wantsome.project.db.dto.Type;
 import wantsome.project.db.service.CategoryDao;
+import wantsome.project.db.service.TransactionDao;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static wantsome.project.ui.web.SparkUtil.render;
@@ -17,10 +20,13 @@ public class CategoriesPageController {
 
     public enum SortedBy {
         ID_ASC,
-        ID_DESC
+        ID_DESC,
+        DESCR_ASC,
+        DESCR_DESC
     }
 
     private static final CategoryDao catDao = new CategoryDao();
+    private static final TransactionDao transDao = new TransactionDao();
 
     public static String showCategoriesPage(Request req, Response res) {
 
@@ -28,17 +34,27 @@ public class CategoriesPageController {
 
         Type type = getTypeFromParamOrSes(req);
 
+
         List<CategoryDto> categories = getCategoriesToDisplay(catDao.getAll(), type, sortedBy);
 
+        List<TransactionDto> transactions = transDao.getAll();
+
+        List<Long> transCatId = transDao.getAll()
+                .stream()
+                .map(i -> i.getCategory_id())
+                .collect(Collectors.toList());
 
         Map<String, Object> model = new HashMap<>();
         model.put("categories", categories);
+        model.put("transactions", transactions);
+        model.put("transCatId", transCatId);
         model.put("sortedBy", sortedBy);
         model.put("type", type);
 
 
         return render(model, "categories.vm");
     }
+
 
     public static Object handleDeleteRequest(Request req, Response res) {
         String id = req.params("id");
@@ -86,16 +102,18 @@ public class CategoriesPageController {
             categories = allCategories.stream()
                     .filter(i -> i.getType() == Type.EXPENSE)
                     .collect(toList());
-        } else {
-
         }
 
         return categories.stream()
                 .sorted((n1, n2) -> {
                     if (sortedBy == SortedBy.ID_ASC) {
                         return Long.compare(n1.getId(), n2.getId());
-                    } else {
+                    } else if (sortedBy == SortedBy.ID_DESC) {
                         return Long.compare(n2.getId(), n1.getId());
+                    } else if (sortedBy == SortedBy.DESCR_ASC) {
+                        return n1.getDescription().compareTo(n2.getDescription());
+                    } else {
+                        return n2.getDescription().compareTo(n1.getDescription());
                     }
                 })
                 .collect(toList());

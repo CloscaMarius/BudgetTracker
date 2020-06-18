@@ -1,7 +1,7 @@
 package wantsome.project.db.service;
 
 import org.junit.*;
-import wantsome.project.DbManager;
+import wantsome.project.db.DbManager;
 import wantsome.project.db.dto.CategoryDto;
 import wantsome.project.db.dto.Type;
 

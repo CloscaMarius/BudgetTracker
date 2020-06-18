@@ -26,7 +26,7 @@ public class AddEditCategoryPageController {
 
     public static String showUpdateForm(Request req, Response res) {
         String id = req.params("id");
-        try {
+
             Optional<CategoryDto> optCat = catDao.getById(Integer.parseInt(id));
             if (optCat.isPresent()) {
                 CategoryDto cat = optCat.get();
@@ -35,10 +35,7 @@ public class AddEditCategoryPageController {
                         cat.getType().name(),
                         "");
             }
-        } catch (Exception e) {
-            System.err.println("Error loading category " + id + ": " + e.getMessage());
-        }
-        return "Error: category " + id + " not found!";
+        throw new RuntimeException("Category " + id + " not found!");
     }
 
     private static String renderAddUpdateForm(String id, String description, String type, String errorMessage) {
@@ -51,7 +48,6 @@ public class AddEditCategoryPageController {
         return render(model, "add_edit_category.vm");
     }
 
-
     public static Object handleAddUpdateRequest(Request req, Response res) {
 
         String id = req.queryParams("id");
@@ -61,7 +57,7 @@ public class AddEditCategoryPageController {
         try {
             CategoryDto cat = validateAndBuildCategory(id, description, type);
 
-            if (id != null && !id.isEmpty()) { //update case
+            if (id != null && !id.isEmpty()) {
                 catDao.update(cat);
             } else {
                 catDao.insert(cat);
@@ -80,6 +76,8 @@ public class AddEditCategoryPageController {
 
         if (description == null || description.isEmpty()) {
             throw new RuntimeException("Description is required!");
+        } else if (catDao.getAll().stream().map(i -> i.getDescription()).anyMatch(i -> i.equalsIgnoreCase(description))) {
+            throw new RuntimeException("Please input a distinct description!");
         }
 
         if (type == null || type.isEmpty()) {
