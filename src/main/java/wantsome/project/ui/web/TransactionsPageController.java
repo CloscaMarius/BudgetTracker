@@ -44,11 +44,14 @@ public class TransactionsPageController {
         List<String> allDistinctTransactions = transacDao.getAllFull()
                 .stream().map(n -> n.getCategory_description()).distinct().collect(Collectors.toList());
 
+        boolean isNegative = balance < 0;
+
         Map<String, Object> model = new HashMap<>();
         model.put("transactions", transactions);
         model.put("allDistinctTransactions", allDistinctTransactions);
         model.put("category", category);
         model.put("balance", balance);
+        model.put("isNegative", isNegative);
         model.put("sortBy", sortBy);
         model.put("type", type);
         return render(model, "/transactions.vm");

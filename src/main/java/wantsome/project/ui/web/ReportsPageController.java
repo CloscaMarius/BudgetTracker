@@ -47,9 +47,12 @@ public class ReportsPageController {
 
         Map<String, Double> expenseCategories = getGroupedCategories(Type.EXPENSE, date1, date2);
 
+        boolean isNegative = balance < 0;
+
         Map<String, Object> model = new HashMap<>();
         model.put("transactions", transactions);
         model.put("balance", balance);
+        model.put("isNegative", isNegative);
         model.put("sorted", sorted);
         model.put("category_type", type);
         model.put("date1", date1);

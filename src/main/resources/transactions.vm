@@ -15,7 +15,7 @@
 
     <!-- first row above table, with some labels and links -->
 
-    Balance: <b> $balance </b> &nbsp;
+    Balance: #if($isNegative) <b style="color:red;"> $balance </b> #else <b> $balance </b> #end &nbsp;
 
  Sorted by:
 
