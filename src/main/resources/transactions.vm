@@ -28,25 +28,6 @@
          <option value='/main?sortBy=CATEGORY_ASC' #if($sortBy=='CATEGORY_ASC') selected #end > Category asc </option>
      </select> &emsp;
 
-<!--Filter by type:
-
-        <select  name='type' onChange="window.location.href=this.value" >
-            <option value='/main'> - </option>
-            <option value='/main?type=ALL' #if($type=='ALL') selected #end > All </option>
-            <option value='/main?type=EXPENSE' #if($type=='EXPENSE') selected #end > Expense </option>
-            <option value='/main?type=INCOME' #if($type=='INCOME') selected #end > Income </option>
-        </select> &emsp;
-
-Filter by category:
-
-        <select  name='category' onChange="window.location.href=this.value" >
-             <option value='/main'> - </option>
-             <option value='/main?category=all'#if($category=='all') selected #end> All </option>
-             #foreach($transaction in $allDistinctTransactions)
-             <option value='/main?category=$transaction.category_description'  > $transaction.category_description </option>
-             #end
-        </select> &emsp;-->
-
                 Filter by:
 
                 <select name='filter' onChange="window.location.href=this.value">
@@ -114,13 +95,6 @@ Filter by category:
                 </td>
 
                 <td width=5% align=center>
-             <!--<button><a href='/delete/$transaction.id' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')">
-                   Delete
-             </a></button>-->
-
-                <!--<form action='/delete/$transaction.id'>
-                <input type="submit" value='Delete' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')" >
-                </form>-->
 
                 <button type='submit'  onclick="if(confirm('Are you sure you want to delete transaction with id $transaction.id ?')) location.href='/delete/$transaction.id'">
                                    Delete

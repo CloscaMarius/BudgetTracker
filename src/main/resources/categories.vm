@@ -62,10 +62,6 @@ Sorted by:
 
                 <td width=1% align=center>
                 #if(!$transCatId.contains($cat.id))
-                <!--<button><a href='/delete_cat/$cat.id' onclick="return confirm('Are you sure you want to delete note with id $cat.id ?')">
-                              Delete
-                             </a></button>-->
-
                 <button type='submit'  onclick="if(confirm('Are you sure you want to delete category with id $cat.id ?')) location.href='/delete_cat/$cat.id'">
                              Delete #end
                 </button>
