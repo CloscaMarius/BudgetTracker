@@ -122,7 +122,7 @@ Filter by category:
                 <input type="submit" value='Delete' onclick="return confirm('Are you sure you want to delete note with id $transaction.id ?')" >
                 </form>-->
 
-                <button type='submit'  onclick="if(confirm('Are you sure you want to delete note with id $transaction.id ?')) location.href='/delete/$transaction.id'">
+                <button type='submit'  onclick="if(confirm('Are you sure you want to delete transaction with id $transaction.id ?')) location.href='/delete/$transaction.id'">
                                    Delete
                              </button>
 
